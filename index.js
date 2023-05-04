@@ -8,10 +8,34 @@ inquirer.prompt([
             name: "description",
         },
         {
-            type: "",
+            type: "input",
+            message: "How would I use this application?",
+            name: "usage",
         },
         {
-            type: "",
+            type: "input",
+            message: "?",
+            name: "credit",
+        },
+        {
+            type: "input",
+            message: "Licenses",
+            name: "license",
+        },
+        {
+            type: "input",
+            message: "",
+            name: "badge",
+        },
+        {
+            type: "input",
+            message: "",
+            name: "",
+        },
+        {
+            type: "input",
+            message: "",
+            name: "",
         },
     ])
 
@@ -35,6 +59,7 @@ inquirer.prompt([
     ## License
     
     ${answers.license}
+    ${answers.badge}
     `
     , err =>err ? console.log(err): console.log("README.md was created"))
 })
