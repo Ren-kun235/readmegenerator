@@ -50,7 +50,7 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+fs.writeFile(README.md, structure, ) {}
 
 // TODO: Create a function to initialize app
 function init() {}
@@ -58,8 +58,12 @@ function init() {}
 // Function call to initialize app
 init();
 
-.then((answers) => {
-    fs.writeFile("README.md", 
-    `
-    `)
-})
+// .then((answers) => {
+//     fs.writeFile("README.md", 
+//     `
+//     `)
+// })
+
+const structure = `#readmegenerator
+A faster way to create README files.
+`
