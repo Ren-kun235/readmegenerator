@@ -60,6 +60,7 @@ inquirer.prompt([
 ])
 
 // TODO: Create an array of questions for user input
+
 const questions = [
     "What is the title for your Application?",
 
@@ -85,12 +86,23 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-fs.writeFile(README.md, structure, (err) =>
-    err ? console.error(err) : console.log('Commit logged!')
-);
+function writeToFile() {
+    fs.writeFile(fileName, structure, (err) =>
+    err ? console.error(err) : console.log('README created!')
+    );
+}
+
+// fs.writeFile(fileName, structure, (err) =>
+//     err ? console.error(err) : console.log('README created!')
+// );
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt(questions)        
+    .then(structure => {
+        writeToFile("README.md", generateMarkdown(structure))
+    })
+}
 
 // Function call to initialize app
 init();
@@ -104,24 +116,40 @@ init();
 const structure = `
 #${this.Title}
 
-##${this.Description}
+##Description
 
-##${this.Table}
+${this.Description}
 
-##${this.Installation}
+##Table of Contents
 
-##${this.Usage}
+${this.Table}
 
-##${this.Credit}
+##Installation
 
-##${this.Badges}
+${this.Installation}
 
-##${this.Features}
+##Usage
 
-##${this.Contribution}
+${this.Usage}
 
-##${this.Test}
+##Credit
 
+${this.Credit}
 
+##Badges
+
+${this.Badges}
+
+##Features
+
+${this.Features}
+
+##Contribution
+
+${this.Contribution}
+
+##Test
+
+${this.Test}
 
 `
