@@ -1,68 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-inquirer.prompt([
-    {
-        type: "input",
-        message: questions[0],
-        name: "Title"
-    },
-    {
-        type: "input",
-        message: questions[1],
-        name: "Description"
-    },
-    {
-        type: "checkbox",
-        message: questions[2],
-        name: "Table"
-    },
-    {
-        type: "input",
-        message: questions[3],
-        name: "Installation"
-    },
-    {
-        type: "input",
-        message: questions[4],
-        name: "Usage"
-    },
-    {
-        type: "checkbox",
-        message: questions[5],
-        name: "License"
-    },
-    {
-        type: "input",
-        message: questions[6],
-        name: "Credit"
-    },
-    {
-        type: "input",
-        message: questions[7],
-        name: "Badges"
-    },
-    {
-        type: "input",
-        message: questions[8],
-        name: "Features"
-    },
-    {
-        type: "input",
-        message: questions[9],
-        name: "Contributions"
-    },
-    {
-        type: "input",
-        message: questions[10],
-        name: "Test"
-    },
-])
-
-// TODO: Create an array of questions for user input
-
+// array of questions
 const questions = [
-    "What is the title for your Application?",
+    "What is the title for your application?",
 
     "Write a description of your web application",
 
@@ -85,71 +26,138 @@ const questions = [
     "Is there a way any user could run tests on your application? If so, what steps could I, the user, take to run those tests?",
 ];
 
-// TODO: Create a function to write README file
-function writeToFile() {
-    fs.writeFile(fileName, structure, (err) =>
-    err ? console.error(err) : console.log('README created!')
-    );
+// dynamically created README
+function structure(answers) {
+
+    const input = `
+# ${answers.Title}
+
+## Description
+
+${answers.Description}
+
+## Table of Contents
+
+${contents(answers.Table)}
+
+## Installation
+
+${answers.Installation}
+
+## Usage
+
+${answers.Usage}
+
+## Credit
+
+${answers.Credit}
+
+## License
+
+${answers.License}
+
+## Badges
+
+![Static Badge](https://img.shields.io/badge/${answers.Badges})
+
+## Features
+
+${answers.Features}
+
+## Contribution
+
+${answers.Contribution}
+
+## Test
+
+${answers.Test}
+
+`
+
+    return input
+};
+
+function contents(options) {
+
+    var selection = [];
+
+    for(i = 0; i < options.length; i++) {
+        var something = `- [${options[i]}] (#${options[i]})`
+        selection.push(something)
+    }
+
+    return selection.join(",")
 }
 
-// fs.writeFile(fileName, structure, (err) =>
-//     err ? console.error(err) : console.log('README created!')
-// );
-
 // TODO: Create a function to initialize app
+
 function init() {
-    inquirer.prompt(questions)        
-    .then(structure => {
-        writeToFile("README.md", generateMarkdown(structure))
+    inquirer.prompt([
+        {
+            type: "input",
+            message: questions[0],
+            name: "Title"
+        },
+        {
+            type: "input",
+            message: questions[1],
+            name: "Description"
+        },
+        {
+            type: "checkbox",
+            message: questions[2],
+            name: "Table",
+            choices: ["Installation", "Usage", "Credit", "License", "Badges", "Features", "Contributions", "Test", "None"]
+        },
+        {
+            type: "input",
+            message: questions[3],
+            name: "Installation"
+        },
+        {
+            type: "input",
+            message: questions[4],
+            name: "Usage"
+        },
+        {
+            type: "input",
+            message: questions[5],
+            name: "Credit"
+        },
+        {
+            type: "checkbox",
+            message: questions[6],
+            name: "License",
+            choices: ["MIT", "License", "N/A"]
+        },
+
+        {
+            type: "input",
+            message: questions[7],
+            name: "Badges"
+        },
+        {
+            type: "input",
+            message: questions[8],
+            name: "Features"
+        },
+        {
+            type: "input",
+            message: questions[9],
+            name: "Contributions"
+        },
+        {
+            type: "input",
+            message: questions[10],
+            name: "Test"
+        },
+    ])
+    .then((answers) => {
+        fs.writeFile("README.md", structure(answers), err =>
+        err ? console.error(err) : console.log('README created!')
+        );
     })
 }
 
 // Function call to initialize app
 init();
-
-// .then((answers) => {
-//     fs.writeFile("README.md", 
-//     `
-//     `)
-// })
-
-const structure = `
-#${this.Title}
-
-##Description
-
-${this.Description}
-
-##Table of Contents
-
-${this.Table}
-
-##Installation
-
-${this.Installation}
-
-##Usage
-
-${this.Usage}
-
-##Credit
-
-${this.Credit}
-
-##Badges
-
-${this.Badges}
-
-##Features
-
-${this.Features}
-
-##Contribution
-
-${this.Contribution}
-
-##Test
-
-${this.Test}
-
-`
